@@ -16,10 +16,12 @@ var quotes = new Array({quote:"“The best way out is always through.” ", auth
                        {quote:"“When you come to a fork in the road, take it.” ", author:"Yogi Berra"})
 
 var quotes2;
-proxyXHR.get('https://rawgit.com/joshisa/pleonasm/master/data/quotes.json' ).onSuccess(function (data) {
+proxyXHR.get('https://rawgit.com/joshisa/pleonasm/master/chrome/data/quotes.json' ).onSuccess(function (data) {
   quotes2=JSON.parse(data);
+  console.log(JSON.stringify(quotes2));
+  console.log("quoteme: " + quotes2[0].author);
 });
-console.log("quoteme: " + quotes2[0].author);
+
 var selection=quotes[randomKey(quotes)];
 
 var bq = document.createElement('blockquote');

@@ -1,8 +1,8 @@
 [
-  {quote:"“The best way out is always through.” ", author:"Robert Frost"},
-  {quote:"“Perseverance is not a long race; it is many short races one after the other” ", author: "Walter Elliot"},
-  {quote:"“Without a struggle, there can be no progress.” ", author:"Frederick Douglass"},
-  {quote:"“You can have data without information, but you cannot have information without data.” ", author:"Daniel Keys Moran"},
-  {quote:"“If I don't like the shape of the world around me, then I shape the world around me.” ", author:"Sanjay Joshi"},
-  {quote:"“When you come to a fork in the road, take it.” ", author:"Yogi Berra"}
+  {"quote":"“The best way out is always through.” ", "author":"Robert Frost"},
+  {"quote":"“Perseverance is not a long race; it is many short races one after the other” ", "author": "Walter Elliot"},
+  {"quote":"“Without a struggle, there can be no progress.” ", "author":"Frederick Douglass"},
+  {"quote":"“You can have data without information, but you cannot have information without data.” ", "author":"Daniel Keys Moran"},
+  {"quote":"“If I don't like the shape of the world around me, then I shape the world around me.” ", "author":"Sanjay Joshi"},
+  {"quote":"“When you come to a fork in the road, take it.” ", "author":"Yogi Berra"}
 ]

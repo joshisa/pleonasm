@@ -8,81 +8,70 @@ function randomKey(obj) {
     return ret;
 }
 
-var quotes = new Array({quote:"“The best way out is always through.” ", author:"Robert Frost"},
-                       {quote:"“Perseverance is not a long race; it is many short races one after the other” ", author: "Walter Elliot"},
-                       {quote:"“Without a struggle, there can be no progress.” ", author:"Frederick Douglass"},
-                       {quote:"“You can have data without information, but you cannot have information without data.” ", author:"Daniel Keys Moran"},
-                       {quote:"“If I don't like the shape of the world around me, then I shape the world around me.” ", author:"Sanjay Joshi"},
-                       {quote:"“When you come to a fork in the road, take it.” ", author:"Yogi Berra"})
-
-var quotes2;
 proxyXHR.get('https://rawgit.com/joshisa/pleonasm/master/chrome/data/quotes.json' ).onSuccess(function (data) {
-  quotes2=JSON.parse(data);
-  console.log(JSON.stringify(quotes2));
-  console.log("quoteme: " + quotes2[0].author);
-});
+  var quotes=JSON.parse(data);
+  var selection=quotes[randomKey(quotes)];
 
-var selection=quotes[randomKey(quotes)];
+  var bq = document.createElement('blockquote');
+  bq.style="text-align:center;line-height:0px;margin:0px;";
 
-var bq = document.createElement('blockquote');
-bq.style="text-align:center;line-height:0px;margin:0px;";
+  var para = document.createElement('p');
+  para.style="color: #4863a0 ; font-size: 24px ; font-weight: bold";
+  para.innerHTML=selection.quote;
 
-var para = document.createElement('p');
-para.style="color: #4863a0 ; font-size: 24px ; font-weight: bold";
-para.innerHTML=selection.quote;
+  var tilda = document.createElement('span');
+  tilda.id="tilda";
+  tilda.innerHTML="~";
 
-var tilda = document.createElement('span');
-tilda.id="tilda";
-tilda.innerHTML="~";
-
-tilda.addEventListener("click", function(e) {
-  window.location.hash = 'pleonasm=burningfire';
-  var regex = /(.*)\.ng.bluemix.net/;
-  newurl = window.location.hostname.replace(regex, function(match, $1, $2, offset, original) { 
-    var goldensubdomain = "cdsx";
-    var prefix = "[Unexpected Surprise]] ";
-    console.log(window.location.href);
-    if ($1 !== goldensubdomain) {
-      console.warn(prefix + "With a subdomain of: " + $1 + " ... cross domain problems lie ahead if we don't act to fix 'em");
-      document.location = window.location.href.replace("console", goldensubdomain);
+  tilda.addEventListener("click", function(e) {
+    window.location.hash = 'pleonasm=burningfire';
+    var regex = /(.*)\.ng.bluemix.net/;
+    newurl = window.location.hostname.replace(regex, function(match, $1, $2, offset, original) { 
+      var goldensubdomain = "cdsx";
+      var prefix = "[Unexpected Surprise]] ";
+      console.log(window.location.href);
+      if ($1 !== goldensubdomain) {
+        console.warn(prefix + "With a subdomain of: " + $1 + " ... cross domain problems lie ahead if we don't act to fix 'em");
+        document.location = window.location.href.replace("console", goldensubdomain);
+      }
+      return window.location.href;
+    });
+    
+    if (window.location.hostname.indexOf("cdsx") !== -1) {
+      window.location.reload(true);
+    } else {
+      window.location.assign(newurl);
     }
-    return window.location.href;
-  });
-  
-  if (window.location.hostname.indexOf("cdsx") !== -1) {
-    window.location.reload(true);
-  } else {
-    window.location.assign(newurl);
-  }
-}, false);
+  }, false);
 
-var author = document.createElement('span');
-author.id="author";
-author.innerHTML=selection.author;
+  var author = document.createElement('span');
+  author.id="author";
+  author.innerHTML=selection.author;
 
-para.appendChild(tilda);
-para.appendChild(author);
-bq.appendChild(para);
+  para.appendChild(tilda);
+  para.appendChild(author);
+  bq.appendChild(para);
 
-chrome.extension.sendMessage({}, function(response) {
-    var readyStateCheckInterval = setInterval(function() {
-      if (document.readyState === "complete") {
-        clearInterval(readyStateCheckInterval);
-        var prefix = "[Unexpected Surprise]] ";
-        var re = /https:\/\/.*\.ng.bluemix.net\/data\/notebooks\/[A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12}\?tenant=.*/;
-        if (re.test(location.href)) { 
-          notebookContainer = document.getElementsByClassName("notebookContainer")[0];
-          notebookContainer.insertBefore(bq, notebookContainer.firstChild);
-          if (window.location.hash === "#pleonasm=burningfire") {
-            console.warn(prefix + "It looks like your notebook is having trouble. Let me help you ;-)");
-            iframe = document.getElementById('guest');
-            // Weird timing bug .. but seems like writing out to console allows the right wait for the iframe to load
-            console.warn("Found the notebook iframe: " + iframe);
-            restart_run_all = iframe.contentWindow.document.getElementById('restart_run_all');
-            // Easter Egg.  Pick the poison.  I'll go with restart and run all which works well in 
-            restart_run_all.click();
+  chrome.extension.sendMessage({}, function(response) {
+      var readyStateCheckInterval = setInterval(function() {
+        if (document.readyState === "complete") {
+          clearInterval(readyStateCheckInterval);
+          var prefix = "[Unexpected Surprise]] ";
+          var re = /https:\/\/.*\.ng.bluemix.net\/data\/notebooks\/[A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12}\?tenant=.*/;
+          if (re.test(location.href)) { 
+            notebookContainer = document.getElementsByClassName("notebookContainer")[0];
+            notebookContainer.insertBefore(bq, notebookContainer.firstChild);
+            if (window.location.hash === "#pleonasm=burningfire") {
+              console.warn(prefix + "It looks like your notebook is having trouble. Let me help you ;-)");
+              iframe = document.getElementById('guest');
+              // Weird timing bug .. but seems like writing out to console allows the right wait for the iframe to load
+              console.warn("Found the notebook iframe: " + iframe);
+              restart_run_all = iframe.contentWindow.document.getElementById('restart_run_all');
+              // Easter Egg.  Pick the poison.  I'll go with restart and run all which works well in 
+              restart_run_all.click();
+            }
           }
         }
-      }
-    }, 15);
+      }, 15);
+  });
 });

@@ -8,14 +8,18 @@ function randomKey(obj) {
     return ret;
 }
 
-var quotes = new Array(2);
-quotes['one']={quote:"“The best way out is always through.” ", author:"Robert Frost"}
-quotes['two']={quote:"“Perseverance is not a long race; it is many short races one after the other” ", author: "Walter Elliot"}
-quotes['three']={quote:"“Without a struggle, there can be no progress.” ", author:"Frederick Douglass"}
-quotes['four']={quote:"“You can have data without information, but you cannot have information without data.” ", author:"Daniel Keys Moran"}
-quotes['five']={quote:"“If I don't like the shape of the world around me, then I shape the world around me.” ", author:"Sanjay Joshi"}
-quotes['six']={quote:"“When you come to a fork in the road, take it.” ", author:"Yogi Berra"}
+var quotes = new Array({quote:"“The best way out is always through.” ", author:"Robert Frost"},
+                       {quote:"“Perseverance is not a long race; it is many short races one after the other” ", author: "Walter Elliot"},
+                       {quote:"“Without a struggle, there can be no progress.” ", author:"Frederick Douglass"},
+                       {quote:"“You can have data without information, but you cannot have information without data.” ", author:"Daniel Keys Moran"},
+                       {quote:"“If I don't like the shape of the world around me, then I shape the world around me.” ", author:"Sanjay Joshi"},
+                       {quote:"“When you come to a fork in the road, take it.” ", author:"Yogi Berra"})
 
+var quotes2;
+proxyXHR.get('https://rawgit.com/joshisa/pleonasm/master/data/quotes.json' ).onSuccess(function (data) {
+  quotes2=JSON.parse(data);
+});
+console.log("quoteme: " + quotes2[0].author);
 var selection=quotes[randomKey(quotes)];
 
 var bq = document.createElement('blockquote');

@@ -57,7 +57,7 @@ proxyXHR.get('https://rawgit.com/joshisa/pleonasm/master/chrome/data/quotes.json
         if (document.readyState === "complete") {
           clearInterval(readyStateCheckInterval);
           var prefix = "[Unexpected Surprise]] ";
-          var re = /https:\/\/.*\.ng.bluemix.net\/data\/notebooks\/[A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12}\?tenant=.*/;
+          var re = /https:\/\/.*\.(ng.bluemix.net|ibm.com)\/(data|analytics)\/notebooks\/[A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12}\?tenant=.*/;
           if (re.test(location.href)) { 
             notebookContainer = document.getElementsByClassName("notebookContainer")[0];
             notebookContainer.insertBefore(bq, notebookContainer.firstChild);
@@ -65,7 +65,6 @@ proxyXHR.get('https://rawgit.com/joshisa/pleonasm/master/chrome/data/quotes.json
               console.warn(prefix + "It looks like your notebook is having trouble. Let me help you ;-)");
               iframe = document.getElementById('guest');
               // Weird timing bug .. but seems like writing out to console allows the right wait for the iframe to load
-              console.warn("Found the notebook iframe: " + iframe);
               restart_run_all = iframe.contentWindow.document.getElementById('restart_run_all');
               // Easter Egg.  Pick the poison.  I'll go with restart and run all which works well in 
               restart_run_all.click();

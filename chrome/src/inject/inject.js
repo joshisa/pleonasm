@@ -13,7 +13,7 @@ proxyXHR.get('https://rawgit.com/joshisa/pleonasm/master/chrome/data/quotes.json
   var selection=quotes[randomKey(quotes)];
 
   var bq = document.createElement('blockquote');
-  bq.style="text-align:center;line-height:0px;margin:0px;";
+  bq.style="text-align:center;margin:0px;";
 
   var para = document.createElement('p');
   para.style="color: #4863a0 ; font-size: 24px ; font-weight: bold";
@@ -32,7 +32,7 @@ proxyXHR.get('https://rawgit.com/joshisa/pleonasm/master/chrome/data/quotes.json
       console.log(window.location.href);
       if ($1 !== goldensubdomain) {
         console.warn(prefix + "With a subdomain of: " + $1 + " ... cross domain problems lie ahead if we don't act to fix 'em");
-        document.location = window.location.href.replace("console", goldensubdomain);
+        document.location = window.location.href.replace("new-console", goldensubdomain).replace("console", goldensubdomain);
       }
       return window.location.href;
     });

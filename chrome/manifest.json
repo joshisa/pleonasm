@@ -2,7 +2,11 @@
   "name": "Pleonasm for Bluemix Jupyter",
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "This extension was created ",
+  "description": "This extension was created just cuz",
+  "options_page": "src/config/options.html",
+  "permissions": [
+    "storage"
+  ],
   "homepage_url": "https://pleonasm.mybluemix.net",
   "icons": {
     "16": "icons/logo.png",

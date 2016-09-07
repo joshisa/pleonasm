@@ -11,7 +11,6 @@ function randomKey(obj) {
 proxyXHR.get('https://rawgit.com/joshisa/pleonasm/master/chrome/data/quotes.json' ).onSuccess(function (data) {
   var quotes=JSON.parse(data);
   var selection=quotes[randomKey(quotes)];
-
   var bq = document.createElement('blockquote');
   bq.style="text-align:center;margin:0px;";
 
@@ -60,6 +59,7 @@ proxyXHR.get('https://rawgit.com/joshisa/pleonasm/master/chrome/data/quotes.json
         if (document.readyState === "complete") {
           clearInterval(readyStateCheckInterval);
           var prefix = "[Unexpected Surprise]] ";
+          var kernel = localStorage.kernel;
           var re = /https:\/\/.*\.(ng.bluemix.net|ibm.com)\/(data|analytics)\/notebooks\/[A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12}\?tenant=.*/;
           if (re.test(location.href)) { 
             notebookContainer = document.getElementsByClassName("notebookContainer")[0];
@@ -67,10 +67,14 @@ proxyXHR.get('https://rawgit.com/joshisa/pleonasm/master/chrome/data/quotes.json
             if (window.location.hash === "#pleonasm=burningfire") {
               console.warn(prefix + "It looks like your notebook is having trouble. Let me help you ;-)");
               iframe = document.getElementById('guest');
-              // Weird timing bug .. but seems like writing out to console allows the right wait for the iframe to load
-              restart_run_all = iframe.contentWindow.document.getElementById('restart_run_all');
-              // Easter Egg.  Pick the poison.  I'll go with restart and run all which works well in 
-              restart_run_all.click();
+              chrome.storage.sync.get({
+                kernelAction: 'restart_run_all',
+              }, function(items) {
+                   console.warn(items.kernelAction);
+                   kernelmenu = iframe.contentWindow.document.getElementById(items.kernelAction); 
+                   // Easter Egg.  Pick the poison.  I'll go with restart and run all which works well in 
+                   kernelmenu.click();
+              });
             }
           }
         }

@@ -25,19 +25,22 @@ proxyXHR.get('https://rawgit.com/joshisa/pleonasm/master/chrome/data/quotes.json
 
   tilda.addEventListener("click", function(e) {
     window.location.hash = 'pleonasm=burningfire';
-    var regex = /(.*)\.ng.bluemix.net/;
+    var regex = /(.*)\.(ng.bluemix.net|ibm.com)/;
     newurl = window.location.hostname.replace(regex, function(match, $1, $2, offset, original) { 
       var goldensubdomain = "cdsx";
       var prefix = "[Unexpected Surprise]] ";
-      console.log(window.location.href);
-      if ($1 !== goldensubdomain) {
+      if ($1 !== goldensubdomain && $1 !=="apsportal") {
         console.warn(prefix + "With a subdomain of: " + $1 + " ... cross domain problems lie ahead if we don't act to fix 'em");
         document.location = window.location.href.replace("new-console", goldensubdomain).replace("console", goldensubdomain);
+      } else {
+        console.warn(prefix + " No hostname modifications performed.");
       }
       return window.location.href;
     });
     
     if (window.location.hostname.indexOf("cdsx") !== -1) {
+      window.location.reload(true);
+    } else if (window.location.hostname.indexOf("apsportal") !== -1){
       window.location.reload(true);
     } else {
       window.location.assign(newurl);

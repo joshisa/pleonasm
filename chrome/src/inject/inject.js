@@ -60,7 +60,7 @@ proxyXHR.get('https://rawgit.com/joshisa/pleonasm/master/chrome/data/quotes.json
           clearInterval(readyStateCheckInterval);
           var prefix = "[Unexpected Surprise]] ";
           var kernel = localStorage.kernel;
-          var re = /https:\/\/.*\.(ng.bluemix.net|ibm.com)\/(data|analytics)\/notebooks\/[A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12}\?tenant=.*/;
+          var re = /https:\/\/.*\.(ng.bluemix.net|ibm.com)\/(data|analytics)\/notebooks\/[A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12}(\?tenant=|\/view\?projectid=).*/;
           if (re.test(location.href)) { 
             notebookContainer = document.getElementsByClassName("notebookContainer")[0];
             notebookContainer.insertBefore(bq, notebookContainer.firstChild);

@@ -1,0 +1,18 @@
+---
+declared-services:
+  myObjectStorage:
+    label: Object-Storage
+    plan: Free
+  myComposeMySQL:
+    label: compose-for-mysql
+    plan: Standard
+
+applications:
+- name: WordPressForBluemix
+  memory: 256M #The maximum memory to allocate to each application instance
+  instances: 1 #The number of instances of the application to start
+  buildpack: https://github.com/cloudfoundry/php-buildpack
+  random-route: true
+  services:
+  - myObjectStorage
+  - myComposeMySQL
